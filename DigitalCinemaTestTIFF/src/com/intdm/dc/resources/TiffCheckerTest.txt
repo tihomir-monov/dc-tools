@@ -1,0 +1,9 @@
+!define TEST_SYSTEM {slim}
+!path D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\target\classes\
+!|com.intdm.dc.fixtures.TiffHeaderFixture|
+|width|height|size|checkTiffHeaderAttr?|fileName|
+|1998|1080|12948696|true|D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\src\com\intdm\dc\resources\dc_flat.tif|
+|1996|1080|12948696|false|D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\src\com\intdm\dc\resources\dc_flat.tif|
+|1998|1082|12948696|false|D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\src\com\intdm\dc\resources\dc_flat.tif|
+|1998|1080|12948698|false|D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\src\com\intdm\dc\resources\dc_flat.tif|
+|1998|1080|12948696|false|D:\JAVA\workspaceMylin\DigitalCinemaTestTIFF\src\com\intdm\dc\resources\dc_flat_1.tif|
