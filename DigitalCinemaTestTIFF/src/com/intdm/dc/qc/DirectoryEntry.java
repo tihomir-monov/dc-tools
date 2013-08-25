@@ -12,7 +12,6 @@ public class DirectoryEntry {
 	private long type;
 	private long count;
 	private long offset;
-	private ImageFileDirectory imageFileDirectory;
 	public final static int BYTE = 1;
 	public final static int ACCII = 2;
 	public final static int SHORT = 3;
@@ -43,10 +42,6 @@ public class DirectoryEntry {
 		raf.seek(offset + 8);
 		this.offset = Utils.readLeFourBytesUnsigned(raf);
 	}
-
-	/*public DirectoryEntry() {
-		this(0, 0, 0, 0);
-	}*/
 
 	public long getTag() {
 		return tag;
@@ -83,14 +78,6 @@ public class DirectoryEntry {
 	@Override
 	public String toString() {
 		return "tag, type, count, offset:" + this.tag + ", " + this.type + ", " + this.count + ", " + this.offset;
-	}
-
-	public ImageFileDirectory getImageFileDirectory() {
-		return imageFileDirectory;
-	}
-
-	public void setImageFileDirectory(ImageFileDirectory imageFileDirectory) {
-		this.imageFileDirectory = imageFileDirectory;
 	}
 
 }

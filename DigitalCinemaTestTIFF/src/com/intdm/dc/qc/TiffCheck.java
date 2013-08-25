@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.regex.Pattern;
@@ -23,8 +22,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 /**
  * @author Tihomir Monov
@@ -151,7 +148,7 @@ class FinderThread extends Thread {
 
 	private void find(String startDir, String resolutionToCheck) {
 //		ArrayList<TiffHeader> tiffHeaders = new ArrayList<TiffHeader>();
-		int count = 0;
+		
 		if (isValidResolution(resolutionToCheck)) {
 			String sWidth = resolutionToCheck.substring(0, resolutionToCheck.indexOf(" "));
 			String sHeight = resolutionToCheck.substring(resolutionToCheck.indexOf(" ") + 1, resolutionToCheck.lastIndexOf(" "));
@@ -159,21 +156,11 @@ class FinderThread extends Thread {
 			Long lWidth = new Long(sWidth);
 			Long lHeight = new Long(sHeight);
 			Long lSize = new Long(sSize);
-			/*try {
-				tiffHeaders = DimensionsOfTiff.getTiffHeaders(startDir, lWidth.longValue(), lHeight.longValue());
-				for (int i = 0; i < tiffHeaders.size(); i++) {
-					if (this.isInterrupted()) {
-						wasInterrupted = true;
-						return;
-					}
-					displayText(tiffHeaders.get(i).toString());
-				}
-				displayText("All " + tiffHeaders.size() + " headers match with resolution " + sWidth + "px " + sHeight + "px");
-			} catch (IOException e) {
-				displayText(e.getMessage());
-			}*/
+
 			Queue<File> directories = new LinkedList<File>();
 			File file = new File(startDir);
+			int count = 0;
+			int numFiles = 0;
 			directories.offer(file);
 			while (directories.size() != 0) {
 				File currentDirectory = directories.poll();
@@ -192,11 +179,14 @@ class FinderThread extends Thread {
 					displayStatus("Checking: " + f.getName());
 					if (f.isFile()) {
 						try {
+							numFiles++;
+							displayText(DimensionsOfTiff.checkTiffHeader(f.getAbsolutePath(), lWidth, lHeight, lSize).toString());
 							count ++;
-							displayText(DimensionsOfTiff.getTiffHeader(f.getAbsolutePath(), lWidth, lHeight, lSize).toString());
 						} catch (IOException e) {
 							displayText("ERROR! (" + e.getMessage() + ") ");
 							return;
+						} catch (InvalidTiffHeaderExeption e) {
+							displayText("ERROR! (" + e.getMessage() + ") ");
 						}
 					}
 				}
@@ -207,7 +197,7 @@ class FinderThread extends Thread {
 					}
 				}
 			}
-			displayText("All " + count + " headers match with resolution " + sWidth + "px " + sHeight + "px" + " and size " + sSize);
+			displayText(count + " headers from " + numFiles +" match with resolution " + sWidth + "px " + sHeight + "px" + " and size " + sSize);
 		} else {
 			displayText("Invalid format for the resolution!\nValid formats for example are \"1998 1080 12948696\" or \"2048 858 12948696\"");
 		}

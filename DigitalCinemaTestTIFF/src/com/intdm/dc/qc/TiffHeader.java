@@ -53,7 +53,6 @@ public class TiffHeader {
 
 	public void addImgFileDirectories(ImageFileDirectory imgFileDirectory) {
 		imgFileDirectories.add(imgFileDirectory);
-		imgFileDirectory.setTiffHeader(this);
 	}
 
 	public String getFilePath() {
@@ -67,38 +66,17 @@ public class TiffHeader {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-//		sb.append("\n");
 		sb.append("File path: " + filePath);
 		sb.append("\n");
-//		sb.append("Tiff header >");
-//		sb.append("\n");
-//		sb.append("Byte order: " + byteOrder);
-//		sb.append("\n");
-//		sb.append("File identify: " + fileIdentify);
-//		sb.append("\n");
-//		sb.append("IFD offset: " + IFDOffset);
-//		sb.append("\n");
-
 		for (int i = 0; i < imgFileDirectories.size(); i++) {
 			ArrayList<DirectoryEntry> des = imgFileDirectories.get(i).getDirectoryEntries();
 			long size = 0;
 			for (int j = 0; j < des.size(); j++) {
-//				sb.append("Image file directories > " + (j + 1));
-//				sb.append("\n");
-//				sb.append("Tag: " + new Long(des.get(j).getTag()).toString());
-//				sb.append("\n");
-//				sb.append("Type: " + new Long(des.get(j).getType()).toString());
-//				sb.append("\n");
-//				sb.append("Count: " + new Long(des.get(j).getCount()).toString());
-//				sb.append("\n");
-//				sb.append("Value or Offset: " + new Long(des.get(j).getOffset()).toString());
-//				sb.append("\n");
 				if (des.get(j).getTag() == 273 || des.get(j).getTag() == 279) {
 					size += des.get(j).getOffset();
 				}
 			}
 			sb.append("Size: " + size + " bytes");
-//			sb.append("\n");
 		}
 		return sb.toString();
 	}
